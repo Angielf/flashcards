@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="deck-header">
+    <div class="deck-header-title">
+        <h1>{{ deck_obj }}</h1>
+    </div>
+    <div class="deck-header-actions">
+        <a href="{% url 'cards:editDeck' deck_obj.id %}">Редактировать</a><br>
+        <a href="{% url 'cards:createCard' deck_obj.id %}">Добавить катрочку</a><br>
+        {% if card_obj %}
+            <a href="{% url 'cards:editCard' card_obj.id %}">Редактировать катрочку</a>
+        {% endif %}
+    </div>
+</div>
+
+<hr>
+
+{% if card_obj %}
+<div class="notecard-nav center">
+    {% if card_obj.has_prev_card %}
+        <a href="{% url 'cards:viewDeck' deck_obj.id %}?card={{card_obj.get_prev_card.id}}">Назад</a>
+    {% endif %}
+    {% if deck_obj.get_number_of_cards > 1 %}
+        <a href="{% url 'cards:viewDeck' deck_obj.id %}?card={{deck_obj.get_random_card.id}}">Случайная</a>
+    {% endif %}
+    {% if card_obj.has_next_card %}
+        <a href="{% url 'cards:viewDeck' deck_obj.id %}?card={{card_obj.get_next_card.id}}">Вперёд</a>
+    {% endif %}
+</div>
+
+<div class="notecard">
+    <div class="notecard-front">
+        <p class="text-center">{{card_obj.front}}</p>
+    </div>
+    <div class="notecard-back">
+        <p class="text-center">{{card_obj.back}}</p>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var front = document.querySelector('.notecard-front');
+    var back = document.querySelector('.notecard-back');
+    var card = document.querySelector('.notecard');
+    card.onclick = function(){
+        flipCard();
+    }
+    function flipCard(){
+        if (front.style.display === 'none'){
+            front.style.display = 'block';
+            back.style.display = 'none';
+        }else{
+            front.style.display = 'none';
+            back.style.display = 'block';
+        }
+    }
+</script>
+
+
+{% else %}
+    <p>Нет карточек</p>
+{% endif %}
+
+{% endblock %}

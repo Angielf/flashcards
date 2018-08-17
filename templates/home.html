@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <div class="homepage-banner">
+            <h1>FlashCards</h1>
+            <hr>
+            <h4>Карточки для изучения слов</h4>
+
+            <a class="my-button" href="{% url 'cards:home' %}">Начать</a>
+        </div>
+
+{% endblock %}

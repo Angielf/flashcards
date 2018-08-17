@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="homepage-banner">
+        <h1>FlashCards</h1>
+        <hr>
+        <h4>Выберите раздел</h4>
+
+        <a class="blue-back my-button" href="{% url 'cards:createDeck' %}">Создать новый раздел</a>
+        {% if decks %}
+
+            {% for deck in decks %}
+                <a class="my-button" href="{% url 'cards:viewDeck' deck.id %}">{{ deck.title }}</a>
+
+            {% endfor %}
+
+        {% else %}
+            <h1>Нет содержания</h1>
+        {% endif %}
+    </div>
+{% endblock %}

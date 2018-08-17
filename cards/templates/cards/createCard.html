@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <input type="submit" value="Отправить">
+    </form>
+
+    {% if edit_mode %}
+        <p>Вы действительно хотите удалить эту карточку?</p>
+        <a href="{% url 'cards:deleteCard' card_obj.id %}">Удалить эту карту</a>
+    {% endif %}
+{% endblock %}
